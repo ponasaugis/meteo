@@ -47,7 +47,8 @@ var options = {
         })
         .then(data => {
             resolve(data);
-            pushDataToHTML(data)            
+            pushDataToHTML(data);
+            graph(data);        
         });
        
     });
@@ -78,6 +79,7 @@ function submitFunction(){
 document.querySelector('#input').addEventListener("keypress", function (e) {
     if (e.key === 'Enter'){ 
         fechData();
+        
         
     };
 })
