@@ -2,3 +2,12 @@
 	max-width: 450px;
 }
 
+
+.lineSet {
+	background-color: tomato;
+	width: 30px;
+	padding: 1px;
+	margin: 0 5px;
+	border: 0.5px solid black;
+	
+}

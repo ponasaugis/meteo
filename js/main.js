@@ -155,11 +155,6 @@ document.getElementById('button').addEventListener("click", function(){
 
 
 
-
-
-
-
-
 function fechData(){
     let url = `https://api.openweathermap.org/data/2.5/forecast?q=${submitFunction()}&units=metric&lang=lt&appid=${APIkey}`;
     fetch(url)
@@ -172,6 +167,8 @@ function fechData(){
             response.json().then(function(data) {
                 data
                 pushDataToHTML(data) ;
+                graph(data);
+                console.log(data.list[0].main.temp)
                 });
             })      
         };
@@ -230,8 +227,29 @@ function pushDataToHTML(data){
 
 
 
+// Graph
 
+function graph(data){
+    // let quantity = parseInt(document.getElementById('quantity').value)
+    // let maxValue = parseInt(document.getElementById('maxValue').value)
+    // let minValue = parseInt(document.getElementById('minValue').value)
 
+    
+    graphParent.innerHTML = ''
+
+    for(let i = 1; i <= 9; i++){
+        let graphParent = document.getElementById('graphParent')
+        let createGraph = document.createElement('div')			
+        createGraph.classList.add('lineSet')
+        createGraph.setAttribute('id', 'line-' + i)
+        graphParent.appendChild(createGraph);
+        let graphHeight = document.getElementById('line-' + i);
+        graphHeight.style.height = String((Math.floor(((data.list[i].main.temp) + 10) * 10) + 'px'));
+        let persist = document.getElementById('line-' + i)			
+        console.log(data.list[i].main.temp)
+    };
+
+};
 
 
 
