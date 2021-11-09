@@ -8,6 +8,7 @@ let description = document.querySelector('.description');
 let logo = document.getElementById('logo');
 
 let ThreeDays = document.getElementById('ThreeDays');
+let hourlyForecast = document.getElementById('hourlyForecast');
 
 let logoTomorrow = document.getElementById('logoTomorrow');
 let logoAfterTomorrow = document.getElementById('logoAfterTomorrow');
@@ -48,7 +49,8 @@ var options = {
         .then(data => {
             resolve(data);
             pushDataToHTML(data);
-            graph(data);        
+            graph(data);
+            showChart()        
         });
        
     });
@@ -79,6 +81,7 @@ function submitFunction(){
 document.querySelector('#input').addEventListener("keypress", function (e) {
     if (e.key === 'Enter'){ 
         fechData();
+        showChart();
         
         
     };
@@ -151,9 +154,7 @@ document.querySelector('#input').addEventListener("keypress", function (e) {
 
 // FIND CITY
 
-document.getElementById('button').addEventListener("click", function(){
-    fechData()
-});
+document.getElementById('button').addEventListener("click", fechData);
 
 
 
@@ -170,7 +171,7 @@ function fechData(){
                 data
                 pushDataToHTML(data) ;
                 graph(data);
-                console.log(data.list[0].main.temp)
+                  
                 });
             })      
         };
@@ -198,6 +199,7 @@ function pushDataToHTML(data){
         cityName.innerHTML = data.city.name.toUpperCase();   
 
         ThreeDays.innerHTML = 'Trijų dienų prognozė';
+        hourlyForecast.innerHTML = '24 valandų prognozė';
 
         //Main Icon
         let icon = data.list[0].weather[0].icon;
@@ -223,6 +225,8 @@ function pushDataToHTML(data){
         let wicon3 = `img/meteo/${icon3}.png`      
         
         logoDayAfterTomorrow.src = wicon3;
+
+        
         
 
 };
@@ -231,29 +235,138 @@ function pushDataToHTML(data){
 
 // Graph
 
+let graphHeight = []
+let timeArray = []
+
 function graph(data){
-    // let quantity = parseInt(document.getElementById('quantity').value)
-    // let maxValue = parseInt(document.getElementById('maxValue').value)
-    // let minValue = parseInt(document.getElementById('minValue').value)
 
+    let graphHeight = []
+    let timeArray = []
     
-    graphParent.innerHTML = ''
-
     for(let i = 1; i <= 9; i++){
-        let graphParent = document.getElementById('graphParent')
-        let createGraph = document.createElement('div')			
-        createGraph.classList.add('lineSet')
-        createGraph.setAttribute('id', 'line-' + i)
-        graphParent.appendChild(createGraph);
-        let graphHeight = document.getElementById('line-' + i);
-        graphHeight.style.height = String((Math.floor(((data.list[i].main.temp) + 10) * 10) + 'px'));
-        let persist = document.getElementById('line-' + i)			
-        console.log(data.list[i].main.temp)
+                
+        let graphic = Math.ceil(data.list[i].main.temp);
+        let initialTime = data.list[i].dt_txt;
+        const hoursSliced = initialTime.slice(10, 13)
+        hoursWaZero = Number(hoursSliced)
+          if (hoursWaZero == 0){
+            hoursWaZero = 24;
+            
+        }
+        
+        
+        graphHeight.push(graphic)
+        timeArray.push(hoursWaZero + 'h')
+           
     };
+   
+    getValuesForChart(graphHeight)
+    getTimeFromArray(timeArray)
+    updateChart(graphHeight)
+    updateTime(timeArray)
 
 };
 
+function getTimeFromArray(timeArray){
+    return timeArray;
+}
 
 
+ 
+function getValuesForChart(graphHeight){        
+    return graphHeight;
+}
+
+
+
+
+function updateChart(graphHeight){
+    myChart.data.datasets[0].data = graphHeight
+    myChart.update();    
+}
+
+function updateTime(timeArray){
+    myChart.data.labels = timeArray
+    myChart.update();
+    console.log('Cia is UPDATE TIME' + timeArray)
+}
+
+
+
+//CHART
+
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const DISPLAY = false;
+
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: timeArray,
+        
+        datasets: [{
+            label: '',
+            barThickness: 25,
+            barPercentage: 0.5,
+            data: getValuesForChart,
+            backgroundColor: [
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8))',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8)',
+                'rgba(75, 192, 192, 0.8)'
+            ],
+            borderColor: [
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(75, 192, 192, 1)',
+            ],
+            borderWidth: 0.5
+        }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display: false
+              }
+        },
+        scales: {         
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Temperatūra'
+                },
+                grid: {
+                    display: DISPLAY,
+                },             
+            },
+            x: {
+                grid: {
+                    display: DISPLAY,
+                },
+                title: {
+                    display: true,
+                    text: 'Valandos'
+                },
+                                
+            }
+            
+            
+
+        }
+    }
+    
+});
 
 

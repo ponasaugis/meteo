@@ -1,5 +1,5 @@
 .customWidth {
-	max-width: 450px;
+	max-width: 800px;
 }
 
 
@@ -11,3 +11,50 @@
 	border: 0.5px solid black;
 	
 }
+
+/* #chart {
+	display: none;
+} */
+
+/* GRAPH */
+
+
+#radioDiv {
+	top: 45px;
+	font-family: verdana;
+	font-size: 8px;
+	width: 455px;
+  }
+  
+  #TOPbarChart {
+	position: absolute;
+	top: 50px;
+	left: 30px;
+	width: 750px;
+	height: 195px;
+  }
+  
+  .axis--y path,
+  .axis--x path {
+	display: none;
+  }
+  
+  .axis--x line,
+  .axis--y line {
+	stroke: black;
+	fill: none;
+	stroke-width: 2px
+  }
+  
+  .yAxis text,
+  .xAxis text {
+	font: 7pt Verdana;
+	stroke: none;
+	fill: black;
+  }
+  
+  .title,
+  .titleX {
+	font-family: Verdana;
+	font-size: 10px;
+  }

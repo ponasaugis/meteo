@@ -15,18 +15,19 @@
 </head>
 <body>
     <div class="container-sm d-flex justify-content-center align-items-center vh-100">
-        <div class="container w-50 d-flex flex-column align-items-center border border-light rounded shadow customWidth">
+        <div class="container d-flex flex-column align-items-center border border-light rounded shadow w-50">
             <img src="img\sun.png" class="img-thumbnail w-25 bg-transparent border-0 mt-4 mb-2
             mt-2" alt="Logo">
             <h4>Mega Meteo</h4>
             <div class="input-group mb-3 mt-3">                
                 <input id="input" type="text" class="form-control" placeholder="Įveskite miesto pavadinimą" aria-label="Miesto pavadinimas" aria-describedby="inputGroup-sizing-default">
-                <button id="button" type="button" class="btn btn-warning" data-bs-toggle="collapse" data-bs-target="#collapse"><i class="bi bi-arrow-return-left"></i></button>
+                <button id="button" type="button" class="btn btn-warning"><i class="bi bi-arrow-return-left"></i></button>
             </div>
             <div class="container-sm mb-2 p-0 d-flex justify-content-end align-items-center">
                 <button id="geoButton" type="button" class="btn btn-link">
                     Rasti mano vietą<i class="bi bi-geo-alt"></i>
-                </button>                
+                </button>
+                             
             </div>
 
             <div id="" class="container d-flex flex-column align-items-center mb-2 ">
@@ -42,20 +43,26 @@
                             <p class="description fs-6 fw-light mb-3 text-center"></p>
                         </div>  
 
-                        <!-- GRAPH -->
-                        <div class="container main">
-                            <div class="main-inner d-flex align-items-end justify-content-between mt-3 mb-3" id="graphParent">
-				
-                            </div>
-                        </div>      
-                        <!-- GRAPH  -->
+                        
                       </div>
                 </div>
+                <p>
+                    <a id="hourlyForecast" class="" data-bs-toggle="collapse" href="#collapseHourly" role="button" aria-expanded="false" aria-controls="collapseHourly"></a>
+                  </p>
+                  <div class="collapse mb-2 w-100" id="collapseHourly">
+                        <!-- GRAPH -->
+                        <div id="chart" class="container main ">
+                            <canvas id="myChart"></canvas> 
+                         </div>      
+                         <!-- GRAPH  -->
+                    </div>
+
+
                       <!-- Toggle 3 days forecast -->
                         <p>
-                          <a id="ThreeDays" class="" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"></a>
+                          <a id="ThreeDays" class="" data-bs-toggle="collapse" href="#threeDays" role="button" aria-expanded="false" aria-controls="threeDays"></a>
                         </p>
-                        <div class="collapse mb-2" id="collapseExample">
+                        <div class="collapse mb-2" id="threeDays">
                           <div class="card card-body">
                              <div class="row">
                         <div class="col-sm-4 text-center">
@@ -93,6 +100,11 @@
     
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+  integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+  crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js\main.js"></script>
     
 </body>
